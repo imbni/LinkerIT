@@ -1,10 +1,10 @@
 <?php
-
-// LinkerIT v1.01
-// 01/09/2012
-// linkerIT.YouOnTech.net for informations
-// linkerIT.YouOnTech.net/ticket for support
-// info@YouOnTech.net subject: LinkerIT
+/* LinkerIT link checker
+Version: 1.01
+01/09/2012
+linkerIT.YouOnTech.net for informations
+linkerIT.YouOnTech.net/ticket for support
+info@YouOnTech.net subject: LinkerIT */
 
 
 isset($_POST['url']) or exit;
