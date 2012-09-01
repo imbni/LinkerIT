@@ -4,36 +4,37 @@ var check_mode = "onload"; // onload, onlink
 var check_link_text = "Click to check links";
 
 
-function init() {
-    if (typeof $ == "undefined"){
+if (typeof window.jQuery === "undefined") {
+    var script = document.createElement('script');
+    script.onload = function(){
+        if (typeof Prototype !== "undefined") {
+            jQuery.noConflict();
 
-    document.write('<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
-    if (typeof Prototype !== "undefined") {
-        document.write('<script>jQuery.noConflict();<\/script>');
+            jQuery(document).ready(function() {
+            	if (check_mode == "onload") {
+            		linkerit_check();
+            	}
+            	else if (check_mode == "onlink") {
+            		jQuery(check_element).each(function() {
+            			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
+            		});
+            		jQuery(".check_link").click(function() {
+            			linkerit_check();
+            			return false;
+            		});
+            	}
+            	
+            });
+        }
     }
-
-    }
+    script.src = 'http://code.jquery.com/jquery-latest.min.js';
+    document.getElementsByTagName('head')[0].appendChild(script);   
 }
-window.onload = init;
 
 
 
 
-jQuery(document).ready(function() {
-	if (check_mode == "onload") {
-		linkerit_check();
-	}
-	else if (check_mode == "onlink") {
-		jQuery(check_element).each(function() {
-			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
-		});
-		jQuery(".check_link").click(function() {
-			linkerit_check();
-			return false;
-		});
-	}
-	
-});
+
 
 function linkerit_check() {
 	jQuery(check_element).each(function() {
