@@ -9,24 +9,26 @@ if (typeof window.jQuery === "undefined") {
 	if (typeof Prototype !== "undefined") {
 		document.write('<script>jQuery.noConflict();<\/script>');
 	}
+	
+	jQuery(document).ready(function() {
+		if (check_mode == "onload") {
+			linkerit_check();
+		}
+		else if (check_mode == "onlink") {
+			jQuery(check_element).each(function() {
+				jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
+			});
+			jQuery(".check_link").click(function() {
+				linkerit_check();
+				return false;
+			});
+		}
+		
+	});
 }
 
 
-jQuery(document).ready(function() {
-	if (check_mode == "onload") {
-		linkerit_check();
-	}
-	else if (check_mode == "onlink") {
-		jQuery(check_element).each(function() {
-			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
-		});
-		jQuery(".check_link").click(function() {
-			linkerit_check();
-			return false;
-		});
-	}
-	
-});
+
 
 function linkerit_check() {
 	jQuery(check_element).each(function() {
