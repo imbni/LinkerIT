@@ -4,31 +4,30 @@ var check_mode = "onload"; // onload, onlink
 var check_link_text = "Click to check links";
 
 
-if (typeof window.jQuery === "undefined") {
+/*if (typeof window.jQuery === "undefined") {
 	document.write('<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
 	if (typeof Prototype !== "undefined") {
 		document.write('<script>jQuery.noConflict();<\/script>');
 	}
-	
-	jQuery(document).ready(function() {
-		if (check_mode == "onload") {
+}*/
+document.write('<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
+
+
+jQuery(document).ready(function() {
+	if (check_mode == "onload") {
+		linkerit_check();
+	}
+	else if (check_mode == "onlink") {
+		jQuery(check_element).each(function() {
+			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
+		});
+		jQuery(".check_link").click(function() {
 			linkerit_check();
-		}
-		else if (check_mode == "onlink") {
-			jQuery(check_element).each(function() {
-				jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
-			});
-			jQuery(".check_link").click(function() {
-				linkerit_check();
-				return false;
-			});
-		}
-		
-	});
-}
-
-
-
+			return false;
+		});
+	}
+	
+});
 
 function linkerit_check() {
 	jQuery(check_element).each(function() {
