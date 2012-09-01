@@ -5,10 +5,14 @@ var check_link_text = "Click to check links";
 
 
 if (typeof window.jQuery === "undefined") {
-	document.write('<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
-	if (typeof Prototype !== "undefined") {
-		document.write('<script>jQuery.noConflict();<\/script>');
-	}
+    var script = document.createElement('script');
+    script.onload = function(){
+        if (typeof Prototype !== "undefined") {
+            jQuery.noConflict();
+        }
+    }
+    script.src = 'http://code.jquery.com/jquery-latest.min.js';
+    document.getElementsByTagName('head')[0].appendChild(script);   
 }
 
 
