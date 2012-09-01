@@ -1,7 +1,4 @@
-var check_element = "code";
-var check_newline = "<br>";
-var check_mode = "onload"; // onload, onlink
-var check_link_text = "Click to check links";
+
 
 
 if (typeof window.jQuery === "undefined") {
@@ -41,14 +38,38 @@ function linkerit_check() {
 		jQuery.each(list, function(n, line) {
 			line = line.replace(/<\/?[^>]+(>|$)/g, "");
 			if(jQuery.trim(line).match(/https?:\/\/[www\.]*(mediafire|ddlstorage|filefactory|sharpfile|turbobit|rapidshare|hotfile|easybytez|uploaded|ul|uploading|rapidgator|netload|netfolder|glumbouploads|bitshare|depositfiles|uploadstation|filecloud|share-online|fiberupload|lumfile|billionuploads|ncrypt).+/gi)) {
-				/*jQuery.ajax({
-					method: "POST",
+				jQuery.ajax({
+					type: "POST",
 					url: "linkerit/linkerit.php",
-					data: {url: line}
-				}, function(res) {
-					//
-				});*/
-				console.log(line);
+					data: {url: line},
+					success: function(res) {
+						console.log(res);
+						if (res != null) {
+							if (res[0] == "file") {
+								if (res[1].substr(0,5) == "https")
+									res[1] = res[1].replace(/https:/, "");
+								else
+									res[1] = res[1].replace(/http:/, "");
+								if (res[2] == true) {
+									jQuery(check_element).each(function() {
+										jQuery(this).html(jQuery(this).html().replace(res[1], res[1] + " <img src='linkerit/online.png' style='vertical-align: middle' alt='' />"));
+									});
+								}
+								else {
+									jQuery(check_element).each(function() {
+										jQuery(this).html(jQuery(this).html().replace(res[1], res[1] + " <img src='linkerit/offline.png' style='vertical-align: middle' alt='' />"));
+									});
+								}
+								
+							}
+							else if (res[0] == "folder") {
+								jQuery(check_element).each(function() {
+									jQuery(this).html(jQuery(this).html().replace(res[1], res[1] + " <img src='data:image/png;base64," + res[3] + "' style='vertical-align: middle' alt='' />"));
+								});
+							}
+						}
+					}
+				});
 			};
 		});
 
@@ -56,21 +77,4 @@ function linkerit_check() {
 }
 
 
-function linkerit_set(linkerit_orig, linkerit_result) {
-	if (linkerit_result == "ok") {
-		jQuery("code").each(function() {
-			jQuery(this).html(jQuery(this).html().replace(linkerit_orig, linkerit_orig + " <img src='http://linkerit.youontech.net/images/y.png' title='Link online' style='vertical-align: middle' alt='' />"));
-		});
-	}
-	else if (linkerit_result == "ko") {
-		jQuery("code").each(function() {
-			jQuery(this).html(jQuery(this).html().replace(linkerit_orig, linkerit_orig + " <img src='http://linkerit.youontech.net/images/n.png' title='Link offline' style='vertical-align: middle' alt='' />"));
-		});
-	}
-	else if (linkerit_result.substr(0,2) == "n;") {
-		jQuery("code").each(function() {
-			jQuery(this).html(jQuery(this).html().replace(linkerit_orig, linkerit_orig + " <img src='data:image/png;base64,"+linkerit_result.split(";")[1]+"' style='vertical-align: middle' alt='' />"));
-		});
-	}
-	
-}
+
