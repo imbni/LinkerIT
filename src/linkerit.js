@@ -4,7 +4,7 @@ var check_mode = "onload"; // onload, onlink
 var check_link_text = "Click to check links";
 
 
-if (typeof windows.jQuery === "undefined") {
+if (typeof window.jQuery === "undefined") {
 	document.write('<script src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
 	if (typeof Prototype !== "undefined") {
 		document.write('<script>jQuery.noConflict();<\/script>');
