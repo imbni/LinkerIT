@@ -37,6 +37,7 @@ if (typeof window.jQuery === "undefined") {
 
 
 function linkerit_check() {
+	alert("a");
 	jQuery(check_element).each(function() {
 		var list = jQuery(this).html().split(check_newline);
 		jQuery.each(lista, function(n, line) {
