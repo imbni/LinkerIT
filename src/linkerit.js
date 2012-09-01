@@ -9,23 +9,22 @@ if (typeof window.jQuery === "undefined") {
     script.onload = function(){
         if (typeof Prototype !== "undefined") {
             jQuery.noConflict();
-
-            jQuery(document).ready(function() {
-            	if (check_mode == "onload") {
-            		linkerit_check();
-            	}
-            	else if (check_mode == "onlink") {
-            		jQuery(check_element).each(function() {
-            			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
-            		});
-            		jQuery(".check_link").click(function() {
-            			linkerit_check();
-            			return false;
-            		});
-            	}
-            	
-            });
         }
+        jQuery(document).ready(function() {
+        	if (check_mode == "onload") {
+        		linkerit_check();
+        	}
+        	else if (check_mode == "onlink") {
+        		jQuery(check_element).each(function() {
+        			jQuery(this).prepend('<a href class="check_link">' + check_link_text + '</a>' + check_newline);
+        		});
+        		jQuery(".check_link").click(function() {
+        			linkerit_check();
+        			return false;
+        		});
+        	}
+        	
+        });
     }
     script.src = 'http://code.jquery.com/jquery-latest.min.js';
     document.getElementsByTagName('head')[0].appendChild(script);   
@@ -37,7 +36,6 @@ if (typeof window.jQuery === "undefined") {
 
 
 function linkerit_check() {
-	alert("a");
 	jQuery(check_element).each(function() {
 		var list = jQuery(this).html().split(check_newline);
 		jQuery.each(lista, function(n, line) {
