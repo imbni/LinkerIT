@@ -6,7 +6,7 @@ var check_link_text = "Click to check links";
 
 if (!window.jQuery) {
 	document.write('<script src="http://code.jquery.com/jquery-latest.min.js"><\/script>');
-	if (Prototype) {
+	if !(!Prototype) {
 		document.write('<script>jQuery.noConflict();<\/script>');
 	}
 }
