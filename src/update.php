@@ -1,6 +1,7 @@
 <?php
 
 /* LinkerIT auto-update script */
+// v1.02
 
 // Replace 'password' below with the password you want to use to access this page
 $yourpassword = "password";
@@ -11,7 +12,7 @@ $yourpassword = "password";
 
 
 
-if (isset($_GET['act'])) {
+if (isset($_GET['act']) && @$_SESSION['auth'] == true) {
 	$act = $_GET['act'];
 	switch ($act) {
 		case 'check':

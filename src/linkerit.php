@@ -1,7 +1,7 @@
 <?php
 /* LinkerIT link checker
-Version: 1.01
-01/09/2012
+Version: 1.02
+02/09/2012
 linkerIT.YouOnTech.net for informations
 linkerIT.YouOnTech.net/ticket for support
 info@YouOnTech.net subject: LinkerIT */
@@ -137,7 +137,7 @@ class linkerit {
 	function print_number($number) {
 		$im = imagecreate(50, 14);
 		imagecolortransparent($im, imagecolorallocate($im, 0, 0, 0));
-		imagestring($im, 2, 0, 0,  "$number file", imagecolorallocate($im, 50, 205, 50));
+		imagestring($im, 2, 0, 0,  "$number files", imagecolorallocate($im, 50, 205, 50));
 		ob_start();
 		imagepng($im);
 		$contents =  ob_get_contents();
