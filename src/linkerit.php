@@ -1,7 +1,7 @@
 <?php
 /* LinkerIT link checker
-Version: 1.02
-02/09/2012
+Version: 1.04
+03/09/2012
 linkerIT.YouOnTech.net for informations
 linkerIT.YouOnTech.net/ticket for support
 info@YouOnTech.net subject: LinkerIT */
@@ -10,12 +10,11 @@ info@YouOnTech.net subject: LinkerIT */
 isset($_POST['url']) or exit;
 header('Content-type: application/json');
 
-
 class linkerit {
 
 	function __construct($url) {
 		$this->url = trim($url);
-		preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) or exit;
+		preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $this->url) or exit;
 
 		// regex patterns
 		// [0] => file [1] => folder
@@ -54,10 +53,10 @@ class linkerit {
 			 "shareonline" => array("#http://[www\.]*share\-online\.biz/dl/[\w]+#", ""),
 			 "fiberupload" => array("#http://[www\.]*fiberupload\.com/[a-z0-9]{12}(/.+)?#",
 				"#http://[www\.]*fiberupload\.com/users/.+/\d+#"),
-			 "lumfile" => array("#http://[www\.]*lumfile\.com/[a-z0-9]{12}(/.+)?#",
-				""),
+			 "lumfile" => array("#http://[www\.]*lumfile\.com/[a-z0-9]{12}(/.+)?#",	""),
 			 "billionuploads" => array("#http://[www\.]*billionuploads\.com/[a-z0-9]{12}(/.+)?#",
-				"#http://[www\.]*billionuploads\.com/users/.+/\d+#")
+				"#http://[www\.]*billionuploads\.com/users/.+/\d+#"),
+			 "2shared" => array("#http://[www\.]*2shared\.com/(audio|file|video|photo|document)/.+/.+#", "")
 		);
 		$this->analyze();
 	}
@@ -502,6 +501,16 @@ class linkerit {
 			$this->print_number($this->count_elements($this->get($this->url), "div[class=link]"));
 		else
 			$this->print_number($n);
+	}
+
+
+	function file_2shared() {
+		// http://www.2shared.com/document/7d_6hhEX/a_online.html
+		$result = $this->get($this->url);
+		if ($this->contains($result, "download at 2shared.", "The file link that you requested is not valid"))
+			$this->print_status(true);
+		else
+			$this->print_status(false);
 	}
 
 }
